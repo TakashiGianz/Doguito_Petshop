@@ -2,8 +2,18 @@
   "profile": [
     {
       "nome": "Fernando",
-      "email": "Fernando@alura.com",
+      "email": "fernando.takashi12@gmail.com",
       "id": 1
+    },
+    {
+      "nome": "Ellen",
+      "email": "ellen.rezende.081021@gmail.com",
+      "id": 2
+    },
+    {
+      "nome": "Manu",
+      "email": "manuzinhalinda@hotmail.com",
+      "id": 3
     }
   ]
 }
