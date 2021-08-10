@@ -1,8 +1,8 @@
 import { clienteService } from "../service/cliente-service.js";
 
-const criaNovaLinha = (nome, email) => {
-    const linhaNovoCliente = document.createElement("tr");
-    const conteudo = `
+const criaNovaLinha = (nome, email, id) => {
+  const linhaNovoCliente = document.createElement("tr");
+  const conteudo = `
   <td class="td" data-td>${nome}</td>
   <td>${email}</td>
   <td>
@@ -12,16 +12,31 @@ const criaNovaLinha = (nome, email) => {
       </ul>
   </td> 
   `;
-  
-    linhaNovoCliente.innerHTML = conteudo;
-    return linhaNovoCliente;
-  };
-  
-  const tabela = document.querySelector("[data-tabela]");
 
-  clienteService.listaClientes().then((data) => {
-    data.forEach((elemento) => {
-      tabela.appendChild(criaNovaLinha(elemento.nome, elemento.email));
+  linhaNovoCliente.innerHTML = conteudo;
+  linhaNovoCliente.dataset.id = id;
+
+  return linhaNovoCliente;
+};
+
+const tabela = document.querySelector("[data-tabela]");
+
+tabela.addEventListener("click", (event) => {
+  let isBotaoDeletar =
+    event.target.className === "botao-simples botao-simples--excluir";
+  if (isBotaoDeletar) {
+    const linhaCliente = event.target.closest("[data-id]");
+    let id = linhaCliente.dataset.id;
+    clienteService.removeCliente(id).then(() => {
+      linhaCliente.remove();
     });
+  }
+});
+
+clienteService.listaClientes().then((data) => {
+  data.forEach((elemento) => {
+    tabela.appendChild(
+      criaNovaLinha(elemento.nome, elemento.email, elemento.id)
+    );
   });
-  
+});
