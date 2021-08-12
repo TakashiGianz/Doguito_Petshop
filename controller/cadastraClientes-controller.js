@@ -2,12 +2,16 @@ import { clienteService } from "../service/cliente-service.js";
 
 const formulario = document.querySelector("[data-form]");
 
-formulario.addEventListener("submit", (event) => {
+formulario.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const nome = event.target.querySelector("[data-nome]").value;
-  const email = event.target.querySelector("[data-email]").value;
+  try {
+    const nome = event.target.querySelector("[data-nome]").value;
+    const email = event.target.querySelector("[data-email]").value;
 
-  clienteService.criaCliente(nome, email).then(() => {
+    await clienteService.criaCliente(nome, email);
     window.location.href = "../screens/cadastro_concluido.html";
-  });
+  } catch (erro) {
+    console.log(erro);
+    window.location.href = "../screens/erro.html";
+  }
 });
